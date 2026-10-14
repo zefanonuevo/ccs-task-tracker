@@ -1,5 +1,6 @@
 <!doctype html><html><head><meta charset=utf8><meta name=viewport content="width=device-width,initial-scale=1,viewport-fit=cover"><style>:root{color-scheme:light;box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}html{scroll-padding-top:env(safe-area-inset-top,0px)}body{margin:0;padding:0;font:14px -apple-system,BlinkMacSystemFont,sans-serif;background:#fff;color:#000}img{max-width:100%}[hidden]:not([hidden=until-found i]){display:none!important}</style></head><body>
 <title>CCS Task Tracker</title>
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' rx='7' fill='%230071e3'/%3E%3Cpath d='M8 11h16M8 16h11M8 21h7' stroke='white' stroke-width='2.6' stroke-linecap='round' fill='none'/%3E%3C/svg%3E">
 <link rel="stylesheet" href="https://zefanonuevo.github.io/ccs-design/ccs-tokens.css?v=1">
 <style>
 /* Layout concept: a macOS-style window. Frosted sticky toolbar, segmented tabs, grouped surfaces, a floating inspector for the ticket drawer.
@@ -483,12 +484,23 @@ th{background:var(--paper)}
 }
 .swipe{display:none;margin:0 0 8px}
 @media (max-width:1000px){.swipe{display:block}}
+.tabbar{min-width:0}
+@supports ((backdrop-filter:blur(1px)) or (-webkit-backdrop-filter:blur(1px))){
+  @media (max-width:520px){.tabbar{-webkit-backdrop-filter:saturate(180%) blur(20px);backdrop-filter:saturate(180%) blur(20px)}}}
+@supports not ((backdrop-filter:blur(1px)) or (-webkit-backdrop-filter:blur(1px))){@media (max-width:520px){.tabbar{background:var(--paper)}}}
+/* touch: larger targets */
+@media (pointer:coarse){
+  .btn.small{min-height:36px;padding:0 12px}
+  select.small{min-height:36px}
+  .fchip{min-height:36px;display:inline-flex;align-items:center}
+  .lnk{padding:10px 6px;margin:-10px -6px}
+}
 /* phone: the header scrolls away; only the tab strip stays pinned */
 @media (max-width:520px){
   .top,.top>.wrap,.row2{display:contents}
   .bar{padding-left:max(16px,env(safe-area-inset-left,0px));padding-right:max(16px,env(safe-area-inset-right,0px))}
-  .tabs{position:sticky;top:calc(env(safe-area-inset-top,0px) + 8px);z-index:30;margin-left:max(16px,env(safe-area-inset-left,0px));margin-right:max(16px,env(safe-area-inset-right,0px));
-    background:linear-gradient(var(--fill),var(--fill)),var(--paper);box-shadow:0 -16px 0 0 var(--paper),0 6px 16px -10px rgba(0,0,0,.35)}
+  .tabbar{position:sticky;top:0;z-index:30;padding:calc(env(safe-area-inset-top,0px) + 8px) max(16px,env(safe-area-inset-right,0px)) 8px max(16px,env(safe-area-inset-left,0px));
+    background:color-mix(in srgb,var(--paper) 72%,transparent);border-bottom:1px solid var(--line)}
   .me{padding-left:max(16px,env(safe-area-inset-left,0px));padding-right:max(16px,env(safe-area-inset-right,0px))}
 }
 @media (prefers-reduced-motion:reduce){
@@ -512,7 +524,7 @@ th{background:var(--paper)}
     <div class="theme" id="theme" role="radiogroup" aria-label="Color theme"><button type="button" role="radio" data-theme-set="system" aria-checked="true" aria-label="System theme" title="System"><svg viewBox="0 0 16 16" width="16" height="16" aria-hidden="true"><rect x="1.75" y="2.75" width="12.5" height="8.5" rx="1.5" fill="none" stroke="currentColor" stroke-width="1.4"/><path d="M5.5 14h5M8 11.5V14" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" fill="none"/></svg></button><button type="button" role="radio" data-theme-set="light" aria-checked="false" aria-label="Light theme" title="Light"><svg viewBox="0 0 16 16" width="16" height="16" aria-hidden="true"><circle cx="8" cy="8" r="2.9" fill="none" stroke="currentColor" stroke-width="1.4"/><path d="M8 1.5v1.6M8 12.9v1.6M1.5 8h1.6M12.9 8h1.6M3.4 3.4l1.1 1.1M11.5 11.5l1.1 1.1M3.4 12.6l1.1-1.1M11.5 4.5l1.1-1.1" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" fill="none"/></svg></button><button type="button" role="radio" data-theme-set="dark" aria-checked="false" aria-label="Dark theme" title="Dark"><svg viewBox="0 0 16 16" width="16" height="16" aria-hidden="true"><path d="M13.2 9.6A5.6 5.6 0 0 1 6.4 2.8a5.6 5.6 0 1 0 6.8 6.8z" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linejoin="round"/></svg></button></div>
   </div>
   <div class="row2" id="row2" hidden>
-    <nav class="tabs" id="tabs" role="tablist" aria-label="Sections"></nav>
+    <div class="tabbar"><nav class="tabs" id="tabs" role="tablist" aria-label="Sections"></nav></div>
     <div class="me" id="me"></div>
   </div>
 </div></header>
@@ -1537,7 +1549,7 @@ function reportTables(r){var one=function(v){return v==null?'-':v.toFixed(1)},pc
    dep:r.deps.length?tbl(['Department','Requests'],r.deps.map(function(x){return [esc(x[0]),x[1]]})):''}}
 
 /* ---------- charts: hand-built SVG, one palette, hover and table view on every chart ---------- */
-var CZ_CSS='.cz{background:var(--surface);border:1px solid var(--line);border-radius:8px;padding:14px 16px;min-width:0}.cz h3{font-size:15px}.cz .cz-sub{font-size:12.5px;color:var(--muted);margin:2px 0 8px}.cz svg{display:block;width:100%;height:auto;overflow:visible}.cz text{font:400 11.5px var(--f-body);fill:var(--muted)}.cz text.cz-v{fill:var(--ink);font-weight:600}.cz .gl{stroke:var(--line);stroke-width:1}.cz .ref{stroke:var(--muted);stroke-width:1;opacity:.7}.cz .slot .hit,.cz .bar .hit{fill:transparent}.cz .slot .xh{stroke:var(--muted);stroke-width:1;opacity:0}.cz .slot .dt{opacity:0}.cz .slot:hover .xh,.cz .slot:hover .dt,.cz .slot:focus-within .xh,.cz .slot:focus-within .dt{opacity:1}.cz .bar:hover .mk,.cz .bar:focus .mk{opacity:.8}.cz .bar:focus,.cz .slot rect:focus{outline:none}.cz .bar:focus .hit{stroke:var(--accent);stroke-width:2}.cz .leg{display:flex;flex-wrap:wrap;gap:4px 14px;font-size:12px;color:var(--muted);margin-top:8px}.cz .leg i{display:inline-block;width:12px;height:3px;border-radius:2px;vertical-align:middle;margin-right:6px}.cz .leg i.bx{height:10px;width:10px}.cz details{margin-top:8px;font-size:12.5px}.cz summary{cursor:pointer;color:var(--muted)}.cz table{border-collapse:collapse;width:100%;font-size:12px;margin-top:6px}.cz th,.cz td{text-align:left;padding:4px 8px;border-bottom:1px solid var(--line)}.cz .cz-note{font-size:12.5px;color:var(--muted);margin-top:6px}';
+var CZ_CSS='.cz{background:var(--surface);border:1px solid var(--line);border-radius:8px;padding:14px 16px;min-width:0}.cz h3{font-size:15px}.cz .cz-sub{font-size:12.5px;color:var(--muted);margin:2px 0 8px}.cz svg{display:block;width:100%;height:auto;overflow:visible}.cz text{font:400 11.5px var(--f-body);fill:var(--muted)}.cz text.cz-v{fill:var(--ink);font-weight:600}.cz .gl{stroke:var(--line);stroke-width:1}.cz .ref{stroke:var(--muted);stroke-width:1;opacity:.7}.cz .slot .hit,.cz .bar .hit{fill:transparent}.cz .slot .xh{stroke:var(--muted);stroke-width:1;opacity:0}.cz .slot .dt{opacity:0}.cz .slot:hover .xh,.cz .slot:hover .dt,.cz .slot:focus-within .xh,.cz .slot:focus-within .dt{opacity:1}.cz .bar:hover .mk,.cz .bar:focus .mk{opacity:.8}.cz .bar:focus,.cz .slot rect:focus{outline:none}.cz .bar:focus .hit{stroke:var(--accent);stroke-width:2}.cz .leg{display:flex;flex-wrap:wrap;gap:4px 14px;font-size:12px;color:var(--muted);margin-top:8px}.cz .leg i{display:inline-block;width:12px;height:3px;border-radius:2px;vertical-align:middle;margin-right:6px}.cz .leg i.bx{height:10px;width:10px}.cz details{margin-top:8px;font-size:12.5px;overflow-x:auto}.cz summary{cursor:pointer;color:var(--muted)}.cz table{border-collapse:collapse;width:100%;font-size:12px;margin-top:6px}.cz th,.cz td{text-align:left;padding:4px 8px;border-bottom:1px solid var(--line)}.cz .cz-note{font-size:12.5px;color:var(--muted);margin-top:6px}';
 var CZ_VARS_LIGHT=':root{--surface:#f9fbf8;--line:#d2dbd4;--ink:#13231b;--muted:#566860;--accent:#0b5d45;--warn:#9a5600;--good:#17744a;--crit:#b3261e;--s1:#2a78d6;--s2:#eb6834;--s3:#1baf7a;--hm1:#cde2fb;--hm2:#9ec5f4;--hm3:#6da7ec;--hm4:#3987e5;--hm5:#1c5cab;--f-body:system-ui,sans-serif}';
 var SC=['var(--s1)','var(--s2)','var(--s3)'];
 var STAFFC={oa:'var(--s1)',ob:'var(--s2)',oc:'var(--s3)'};
@@ -1763,7 +1775,7 @@ function buildVer(){
    entry({v:'2.5.0',date:'15 Oct 2026',status:'Prototype',cur:true,sum:'A visual refresh in the style of a macOS app. Every feature works as before.',
     added:['<b>Dark theme</b> and a <b>theme switch</b> in the header: System, Light or Dark. System, the default, follows the device setting, and the choice is remembered in this browser.','Motion that answers a press: buttons, cards and tabs scale down slightly while held, the ticket drawer slides in, and board cards rise in once when the board opens.','Toasts fade out instead of disappearing.'],
     changed:['New look: neutral surfaces, one blue accent, a frosted toolbar, segmented tabs, grouped board columns, and a floating ticket drawer.','The system font replaces the downloaded fonts, so the page loads with no external files.','With Reduce motion turned on, movement is replaced by a short fade.','On phones the header scrolls away and only the tab strip stays pinned, so more of the screen is left for the board.','On narrow screens the Workflow diagram says it scrolls sideways.','Colors, shadows and the theme switch styles now load from one shared stylesheet, also used by the Grant Support Mockups.'],
-    fixed:['Text in the Workflow diagram no longer runs past the edge of its boxes. The Evaluate step now reads "Three ratings".'],
+    fixed:['Text in the Workflow diagram no longer runs past the edge of its boxes. The Evaluate step now reads "Three ratings".','On phones, the pinned tab strip no longer lets page text show above it, buttons and chips are larger to tap, and opening View as table under a chart no longer stretches the page sideways.'],
     limits:['The animations and dark theme have not yet been checked on a phone or at every screen width.']}),
    entry({v:'2.4.0',date:'13 Oct 2026',status:'Prototype',sum:'A Dean and unit head account sees the whole office without changing any task.',
     added:['<b>Dean and unit head</b> sample account (Dr. Elena Navarro). Tabs: Overview (the board, read only), All requests, Monitoring (Tasks and Staff performance), Reports with downloads, New request, Notifications, Workflow.','The unit head receives the missed-task messages, and any rule where the coordinator ticks Unit head, in Notifications and as an in-app message.','The unit head can send a request and evaluate it like any requester, and the simulation now includes requests from the dean\'s office.','The Who can do what table in Blueprint now shows the unit head as oversight, not as an editor.'],
