@@ -488,6 +488,13 @@ th{background:var(--paper)}
   #drawer{inset:0;width:100%;border-radius:0;border:0;transform:translateX(100%)}
   #drawer.open{transform:none}
 }
+/* phone: scrolling tab strip fades at the edge; sim controls fill the row */
+.tabs.more{-webkit-mask-image:linear-gradient(to right,#000 calc(100% - 36px),transparent);mask-image:linear-gradient(to right,#000 calc(100% - 36px),transparent)}
+@media (max-width:520px){
+  .sim{width:100%}
+  .simctl{width:100%}
+  .simctl>.btn{flex:1 1 auto;justify-content:center}
+}
 @media (prefers-reduced-motion:reduce){
   #drawer,#drawer.open{transform:none;transition:opacity 120ms ease}
   #drawer{opacity:0}#drawer.open{opacity:1}
@@ -1823,7 +1830,7 @@ function setTab(id){
   $$('.panel').forEach(function(p){p.hidden=p.id!=='p-'+id});
   $$('.tab').forEach(function(b){b.setAttribute('aria-selected',String(b.dataset.tab===id))});
   try{history.replaceState(null,'','#'+id)}catch(e){}
-  render(true)}
+  render(true);tabFade()}
 function render(force){
   if(!S.user)return;
   if(down&&!force)return;
@@ -1927,6 +1934,8 @@ var czs=document.createElement('style');czs.textContent=CZ_CSS;document.head.app
 document.addEventListener('pointermove',function(e){var el=e.target.closest&&e.target.closest('[data-tip]');if(!el){tipHide();return}tipFill(el);tipPos(e.clientX+14,e.clientY+14)});
 document.addEventListener('focusin',function(e){var el=e.target.closest&&e.target.closest('[data-tip]');if(!el)return;tipFill(el);var b=el.getBoundingClientRect();tipPos(b.left+b.width/2,b.top)});
 document.addEventListener('focusout',tipHide);window.addEventListener('blur',tipHide);window.addEventListener('scroll',tipHide,true);
+function tabFade(){var t=$('#tabs');if(t)t.classList.toggle('more',t.scrollWidth-t.clientWidth-t.scrollLeft>4)}
+(function(){var t=$('#tabs');if(t)t.addEventListener('scroll',tabFade,{passive:true});window.addEventListener('resize',tabFade)})();
 var rz=null;window.addEventListener('resize',function(){clearTimeout(rz);rz=setTimeout(function(){if(S.user&&(S.tab==='rep'||S.tab==='score'))render(true)},150)});
 init();buildHeader();buildLogin();buildBoard();buildHist();buildRep();buildForm();buildFlow();buildPlan();buildVer();
 showApp(false);updateSim();
