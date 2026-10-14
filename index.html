@@ -495,6 +495,14 @@ th{background:var(--paper)}
   .simctl{width:100%}
   .simctl>.btn{flex:1 1 auto;justify-content:center}
 }
+/* phone: the header scrolls away; only the tab strip stays pinned */
+@media (max-width:520px){
+  .top,.top>.wrap,.row2{display:contents}
+  .bar{padding-left:max(16px,env(safe-area-inset-left,0px));padding-right:max(16px,env(safe-area-inset-right,0px))}
+  .tabs{position:sticky;top:calc(env(safe-area-inset-top,0px) + 8px);z-index:30;margin-left:max(16px,env(safe-area-inset-left,0px));margin-right:max(16px,env(safe-area-inset-right,0px));
+    background:linear-gradient(var(--fill),var(--fill)),var(--paper);box-shadow:0 -16px 0 0 var(--paper),0 6px 16px -10px rgba(0,0,0,.35)}
+  .me{padding-left:max(16px,env(safe-area-inset-left,0px));padding-right:max(16px,env(safe-area-inset-right,0px))}
+}
 @media (prefers-reduced-motion:reduce){
   #drawer,#drawer.open{transform:none;transition:opacity 120ms ease}
   #drawer{opacity:0}#drawer.open{opacity:1}
@@ -1764,7 +1772,7 @@ function buildVer(){
   '<div class="sec"><h2>Version history</h2>'+
    entry({v:'2.5.0',date:'15 Oct 2026',status:'Prototype',cur:true,sum:'A visual refresh in the style of a macOS app. Every feature works as before.',
     added:['<b>Dark theme</b> that follows the system setting, built from the same colors as the light theme.','Motion that answers a press: buttons, cards and tabs scale down slightly while held, the ticket drawer slides in, and board cards rise in once when the board opens.','Toasts fade out instead of disappearing.'],
-    changed:['New look: neutral surfaces, one blue accent, a frosted toolbar, segmented tabs, grouped board columns, and a floating ticket drawer.','The system font replaces the downloaded fonts, so the page loads with no external files.','With Reduce motion turned on, movement is replaced by a short fade.'],
+    changed:['New look: neutral surfaces, one blue accent, a frosted toolbar, segmented tabs, grouped board columns, and a floating ticket drawer.','The system font replaces the downloaded fonts, so the page loads with no external files.','With Reduce motion turned on, movement is replaced by a short fade.','On phones the header scrolls away and only the tab strip stays pinned, so more of the screen is left for the board.'],
     fixed:['Text in the Workflow diagram no longer runs past the edge of its boxes. The Evaluate step now reads "Three ratings".'],
     limits:['The animations and dark theme have not yet been checked on a phone or at every screen width.']}),
    entry({v:'2.4.0',date:'13 Oct 2026',status:'Prototype',sum:'A Dean and unit head account sees the whole office without changing any task.',
