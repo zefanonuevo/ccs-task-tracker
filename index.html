@@ -1,38 +1,19 @@
 <!doctype html><html><head><meta charset=utf8><meta name=viewport content="width=device-width,initial-scale=1,viewport-fit=cover"><style>:root{color-scheme:light;box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}html{scroll-padding-top:env(safe-area-inset-top,0px)}body{margin:0;padding:0;font:14px -apple-system,BlinkMacSystemFont,sans-serif;background:#fff;color:#000}img{max-width:100%}[hidden]:not([hidden=until-found i]){display:none!important}</style></head><body>
 <title>CCS Task Tracker</title>
+<link rel="stylesheet" href="https://zefanonuevo.github.io/ccs-design/ccs-tokens.css?v=1">
 <style>
-/* Layout concept: a macOS-style window. Frosted sticky toolbar, segmented tabs, grouped surfaces, a floating inspector for the ticket drawer. */
+/* Layout concept: a macOS-style window. Frosted sticky toolbar, segmented tabs, grouped surfaces, a floating inspector for the ticket drawer.
+   Shared tokens (color, shadow, easing, type, theme switch) load from ccs-design. Tokens below are specific to this app. */
 :root{
-  --paper:#f5f5f7; --surface:#ffffff; --raised:#ffffff; --ink:#1d1d1f; --muted:#6e6e73; --line:#e3e3e8;
-  --accent:#0066cc; --accent-fill:#0071e3; --accent-ink:#ffffff; --accent-soft:#e8f1fc;
-  --good:#1d7a36; --good-soft:#e3f3e8; --warn:#a64b00; --warn-soft:#fdeedd; --crit:#c4001a; --crit-soft:#fde7ea;
   --st-new:#8e8e93; --st-assigned:#5e5ce6; --st-progress:#0071e3; --st-hold:#ff9f0a; --st-done:#30a14e;
   --s1:#2a78d6; --s2:#eb6834; --s3:#1baf7a; --hm1:#cde2fb; --hm2:#9ec5f4; --hm3:#6da7ec; --hm4:#3987e5; --hm5:#1c5cab;
-  --fill:rgba(118,118,128,.12); --scrim:rgba(0,0,0,.28);
-  --shadow-1:0 1px 2px rgba(0,0,0,.05); --shadow-hover:0 4px 14px rgba(0,0,0,.1); --shadow-2:0 12px 40px rgba(0,0,0,.16),0 0 0 .5px rgba(0,0,0,.08);
-  --ease-out:cubic-bezier(.23,1,.32,1); --ease-drawer:cubic-bezier(.32,.72,0,1);
-  --f-display:-apple-system,BlinkMacSystemFont,'SF Pro Display','Segoe UI',system-ui,sans-serif;
-  --f-body:-apple-system,BlinkMacSystemFont,'SF Pro Text','Segoe UI',system-ui,sans-serif;
-  --f-mono:ui-monospace,'SF Mono',Menlo,Consolas,monospace;
 }
 @media (prefers-color-scheme:dark){:root:not([data-theme="light"]){
-  --paper:#1c1c1e; --surface:#2c2c2e; --raised:#353538; --ink:#f5f5f7; --muted:#a1a1a6; --line:#3a3a3c;
-  --accent:#4aa3ff; --accent-fill:#0a6fd6; --accent-ink:#ffffff; --accent-soft:#1b2f47;
-  --good:#30d158; --good-soft:#163524; --warn:#ff9f0a; --warn-soft:#3b2a0c; --crit:#ff6961; --crit-soft:#401c1a;
   --st-new:#98989d; --st-assigned:#7d7aff; --st-progress:#4aa3ff; --st-hold:#ff9f0a; --st-done:#30d158;
-  --s1:#3987e5; --s2:#d95926; --s3:#199e70; --hm1:#1c5cab; --hm2:#256abf; --hm3:#3987e5; --hm4:#6da7ec; --hm5:#9ec5f4;
-  --fill:rgba(118,118,128,.24); --scrim:rgba(0,0,0,.5);
-  --shadow-1:0 1px 2px rgba(0,0,0,.4); --shadow-hover:0 4px 14px rgba(0,0,0,.45); --shadow-2:0 12px 40px rgba(0,0,0,.55),0 0 0 .5px rgba(255,255,255,.08);
-  color-scheme:dark}}
+  --s1:#3987e5; --s2:#d95926; --s3:#199e70; --hm1:#1c5cab; --hm2:#256abf; --hm3:#3987e5; --hm4:#6da7ec; --hm5:#9ec5f4}}
 :root[data-theme="dark"]{
-  --paper:#1c1c1e; --surface:#2c2c2e; --raised:#353538; --ink:#f5f5f7; --muted:#a1a1a6; --line:#3a3a3c;
-  --accent:#4aa3ff; --accent-fill:#0a6fd6; --accent-ink:#ffffff; --accent-soft:#1b2f47;
-  --good:#30d158; --good-soft:#163524; --warn:#ff9f0a; --warn-soft:#3b2a0c; --crit:#ff6961; --crit-soft:#401c1a;
   --st-new:#98989d; --st-assigned:#7d7aff; --st-progress:#4aa3ff; --st-hold:#ff9f0a; --st-done:#30d158;
-  --s1:#3987e5; --s2:#d95926; --s3:#199e70; --hm1:#1c5cab; --hm2:#256abf; --hm3:#3987e5; --hm4:#6da7ec; --hm5:#9ec5f4;
-  --fill:rgba(118,118,128,.24); --scrim:rgba(0,0,0,.5);
-  --shadow-1:0 1px 2px rgba(0,0,0,.4); --shadow-hover:0 4px 14px rgba(0,0,0,.45); --shadow-2:0 12px 40px rgba(0,0,0,.55),0 0 0 .5px rgba(255,255,255,.08);
-  color-scheme:dark}
+  --s1:#3987e5; --s2:#d95926; --s3:#199e70; --hm1:#1c5cab; --hm2:#256abf; --hm3:#3987e5; --hm4:#6da7ec; --hm5:#9ec5f4}
 
 *{box-sizing:border-box}
 [hidden]{display:none!important}
@@ -500,11 +481,6 @@ th{background:var(--paper)}
   .simctl{width:100%}
   .simctl>.btn{flex:1 1 auto;justify-content:center}
 }
-.theme{display:inline-flex;gap:2px;padding:3px;border-radius:9px;background:var(--fill)}
-.theme button{appearance:none;border:0;background:none;width:32px;height:30px;border-radius:7px;display:grid;place-items:center;color:var(--muted);cursor:pointer;transition:transform 160ms var(--ease-out)}
-.theme button[aria-checked="true"]{background:var(--surface);color:var(--ink);box-shadow:0 1px 3px rgba(0,0,0,.14),0 0 0 .5px rgba(0,0,0,.05)}
-.theme button:active{transform:scale(.94)}
-@media (hover:hover) and (pointer:fine){.theme button:hover{color:var(--ink)}}
 .swipe{display:none;margin:0 0 8px}
 @media (max-width:1000px){.swipe{display:block}}
 /* phone: the header scrolls away; only the tab strip stays pinned */
@@ -1786,7 +1762,7 @@ function buildVer(){
   '<div class="sec"><h2>Version history</h2>'+
    entry({v:'2.5.0',date:'15 Oct 2026',status:'Prototype',cur:true,sum:'A visual refresh in the style of a macOS app. Every feature works as before.',
     added:['<b>Dark theme</b> and a <b>theme switch</b> in the header: System, Light or Dark. System, the default, follows the device setting, and the choice is remembered in this browser.','Motion that answers a press: buttons, cards and tabs scale down slightly while held, the ticket drawer slides in, and board cards rise in once when the board opens.','Toasts fade out instead of disappearing.'],
-    changed:['New look: neutral surfaces, one blue accent, a frosted toolbar, segmented tabs, grouped board columns, and a floating ticket drawer.','The system font replaces the downloaded fonts, so the page loads with no external files.','With Reduce motion turned on, movement is replaced by a short fade.','On phones the header scrolls away and only the tab strip stays pinned, so more of the screen is left for the board.','On narrow screens the Workflow diagram says it scrolls sideways.'],
+    changed:['New look: neutral surfaces, one blue accent, a frosted toolbar, segmented tabs, grouped board columns, and a floating ticket drawer.','The system font replaces the downloaded fonts, so the page loads with no external files.','With Reduce motion turned on, movement is replaced by a short fade.','On phones the header scrolls away and only the tab strip stays pinned, so more of the screen is left for the board.','On narrow screens the Workflow diagram says it scrolls sideways.','Colors, shadows and the theme switch styles now load from one shared stylesheet, also used by the Grant Support Mockups.'],
     fixed:['Text in the Workflow diagram no longer runs past the edge of its boxes. The Evaluate step now reads "Three ratings".'],
     limits:['The animations and dark theme have not yet been checked on a phone or at every screen width.']}),
    entry({v:'2.4.0',date:'13 Oct 2026',status:'Prototype',sum:'A Dean and unit head account sees the whole office without changing any task.',
