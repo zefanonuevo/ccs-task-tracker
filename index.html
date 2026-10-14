@@ -502,7 +502,7 @@ th{background:var(--paper)}
   <div class="bar">
     <div class="brand">
       <span class="mark" aria-hidden="true"><svg width="20" height="20" viewBox="0 0 20 20"><path d="M3 4.5h14M3 10h10M3 15.5h6" stroke="#fff" stroke-width="2" stroke-linecap="round" fill="none"/></svg></span>
-      <div><h1>CCS Task Tracker<span class="vtag">v2.4</span></h1><p>Office requests and tasks</p></div>
+      <div><h1>CCS Task Tracker<span class="vtag">v2.5</span></h1><p>Office requests and tasks</p></div>
     </div>
     <div class="sim" id="sim" hidden></div>
   </div>
@@ -887,7 +887,7 @@ function buildLogin(){
    '<form id="loginform" novalidate><div class="fld"><label class="lab" for="l-email">Email</label><input id="l-email" type="email" value="'+esc(REQS[0].email)+'" autocomplete="username"></div>'+
    '<div class="fld" style="margin-top:10px"><label class="lab" for="l-pass">Password</label><input id="l-pass" type="password" value="'+PASSWORD+'" autocomplete="current-password"></div>'+
    '<p class="err" id="l-err" role="alert" style="margin-top:8px"></p><button class="btn primary" type="submit" style="margin-top:12px;width:100%;justify-content:center">Sign in</button></form>'+
-   '<p class="note">Version 2.4 prototype. It accepts the sample accounts on the right with the password <b class="mono">'+PASSWORD+'</b>. The real build signs in with college single sign-on, so there is no separate password to manage.</p></section>'+
+   '<p class="note">Version 2.5 prototype. It accepts the sample accounts on the right with the password <b class="mono">'+PASSWORD+'</b>. The real build signs in with college single sign-on, so there is no separate password to manage.</p></section>'+
    '<section class="accs" aria-label="Sample accounts"><h2>Sample accounts</h2><p class="note">Pick one to fill in the form, then press Sign in. Each role sees something different.</p>'+
    grp('Requesters',by('requester'))+grp('Dean and unit head',by('head'))+grp('Office coordinator',by('coord'))+grp('Office assistants',by('staff'))+'</section></div>'}
 function submitLogin(e){
@@ -1753,9 +1753,13 @@ function buildVer(){
   '<div class="sec" style="margin-top:0"><h2>Version format</h2><div class="cards3"><div class="mini"><h3>Numbering</h3><p><b>Major</b> (3.0): how people work changes, such as new roles or a new workflow. <b>Minor</b> (2.1): new features that leave existing steps alone. <b>Patch</b> (2.1.1): fixes only.</p></div>'+
    '<div class="mini"><h3>Status</h3><p><b>Prototype</b>: for review, sample data. <b>Pilot</b>: used by the office with real data. <b>Released</b>: stable and supported.</p></div>'+
    '<div class="mini"><h3>Each entry answers</h3><p>What was added, changed, removed, and fixed, what the version cannot do yet, and what is queued next. Write it in plain words that a requester or the coordinator would recognize.</p></div></div>'+
-   '<pre style="margin-top:12px">Version        2.4.0\nDate           13 Oct 2026\nStatus         Prototype | Pilot | Released\nSummary        One sentence on what this version is for.\nAdded          New features, in plain words.\nChanged        Things that work differently now.\nRemoved        Things that no longer exist.\nFixed          Problems that were corrected.\nKnown limits   What this version does not do yet.\nNext           Ideas queued for the following version.</pre></div>'+
+   '<pre style="margin-top:12px">Version        2.5.0\nDate           15 Oct 2026\nStatus         Prototype | Pilot | Released\nSummary        One sentence on what this version is for.\nAdded          New features, in plain words.\nChanged        Things that work differently now.\nRemoved        Things that no longer exist.\nFixed          Problems that were corrected.\nKnown limits   What this version does not do yet.\nNext           Ideas queued for the following version.</pre></div>'+
   '<div class="sec"><h2>Version history</h2>'+
-   entry({v:'2.4.0',date:'13 Oct 2026',status:'Prototype',cur:true,sum:'A Dean and unit head account sees the whole office without changing any task.',
+   entry({v:'2.5.0',date:'15 Oct 2026',status:'Prototype',cur:true,sum:'A visual refresh in the style of a macOS app. Every feature works as before.',
+    added:['<b>Dark theme</b> that follows the system setting, built from the same colors as the light theme.','Motion that answers a press: buttons, cards and tabs scale down slightly while held, the ticket drawer slides in, and board cards rise in once when the board opens.','Toasts fade out instead of disappearing.'],
+    changed:['New look: neutral surfaces, one blue accent, a frosted toolbar, segmented tabs, grouped board columns, and a floating ticket drawer.','The system font replaces the downloaded fonts, so the page loads with no external files.','With Reduce motion turned on, movement is replaced by a short fade.'],
+    limits:['The animations and dark theme have not yet been checked on a phone or at every screen width.']}),
+   entry({v:'2.4.0',date:'13 Oct 2026',status:'Prototype',sum:'A Dean and unit head account sees the whole office without changing any task.',
     added:['<b>Dean and unit head</b> sample account (Dr. Elena Navarro). Tabs: Overview (the board, read only), All requests, Monitoring (Tasks and Staff performance), Reports with downloads, New request, Notifications, Workflow.','The unit head receives the missed-task messages, and any rule where the coordinator ticks Unit head, in Notifications and as an in-app message.','The unit head can send a request and evaluate it like any requester, and the simulation now includes requests from the dean\'s office.','The Who can do what table in Blueprint now shows the unit head as oversight, not as an editor.'],
     changed:['Assigning, updating, availability, rules and the calendar stay with the coordinator, so the unit head cannot change a task by accident.'],
     limits:['A unit head who should approve target times or assignments needs a small approval step. It is in the ideas list.']}),
