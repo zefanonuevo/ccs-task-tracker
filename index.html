@@ -491,10 +491,20 @@ th{background:var(--paper)}
 /* phone: scrolling tab strip fades at the edge; sim controls fill the row */
 .tabs.more{-webkit-mask-image:linear-gradient(to right,#000 calc(100% - 36px),transparent);mask-image:linear-gradient(to right,#000 calc(100% - 36px),transparent)}
 @media (max-width:520px){
-  .sim{width:100%}
+  .brand{flex:1 1 0;min-width:0}
+  .brand h1{font-size:16px;white-space:nowrap}
+  .vtag{margin-left:6px;padding:2px 6px}
+  .brand p{white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+  .theme{order:1;margin-left:auto}
+  .sim{width:100%;order:2}
   .simctl{width:100%}
   .simctl>.btn{flex:1 1 auto;justify-content:center}
 }
+.theme{display:inline-flex;gap:2px;padding:3px;border-radius:9px;background:var(--fill)}
+.theme button{appearance:none;border:0;background:none;width:32px;height:30px;border-radius:7px;display:grid;place-items:center;color:var(--muted);cursor:pointer;transition:transform 160ms var(--ease-out)}
+.theme button[aria-checked="true"]{background:var(--surface);color:var(--ink);box-shadow:0 1px 3px rgba(0,0,0,.14),0 0 0 .5px rgba(0,0,0,.05)}
+.theme button:active{transform:scale(.94)}
+@media (hover:hover) and (pointer:fine){.theme button:hover{color:var(--ink)}}
 .swipe{display:none;margin:0 0 8px}
 @media (max-width:1000px){.swipe{display:block}}
 /* phone: the header scrolls away; only the tab strip stays pinned */
@@ -509,11 +519,12 @@ th{background:var(--paper)}
   #drawer,#drawer.open{transform:none;transition:opacity 120ms ease}
   #drawer{opacity:0}#drawer.open{opacity:1}
   #scrim{transition:opacity 120ms ease}
-  .btn:active,.card:active,.tab:active{transform:none}
+  .btn:active,.card:active,.tab:active,.theme button:active{transform:none}
   .stag .card,.toast{animation:fade 120ms ease both}
   .stag .card:nth-of-type(n){animation-delay:0ms}
 }
 </style>
+<script>try{var ct=localStorage.getItem('ccs-theme');if(ct==='light'||ct==='dark')document.documentElement.setAttribute('data-theme',ct)}catch(e){}</script>
 
 <header class="top"><div class="wrap">
   <div class="bar">
@@ -522,6 +533,7 @@ th{background:var(--paper)}
       <div><h1>CCS Task Tracker<span class="vtag">v2.5</span></h1><p>Office requests and tasks</p></div>
     </div>
     <div class="sim" id="sim" hidden></div>
+    <div class="theme" id="theme" role="radiogroup" aria-label="Color theme"><button type="button" role="radio" data-theme-set="system" aria-checked="true" aria-label="System theme" title="System"><svg viewBox="0 0 16 16" width="16" height="16" aria-hidden="true"><rect x="1.75" y="2.75" width="12.5" height="8.5" rx="1.5" fill="none" stroke="currentColor" stroke-width="1.4"/><path d="M5.5 14h5M8 11.5V14" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" fill="none"/></svg></button><button type="button" role="radio" data-theme-set="light" aria-checked="false" aria-label="Light theme" title="Light"><svg viewBox="0 0 16 16" width="16" height="16" aria-hidden="true"><circle cx="8" cy="8" r="2.9" fill="none" stroke="currentColor" stroke-width="1.4"/><path d="M8 1.5v1.6M8 12.9v1.6M1.5 8h1.6M12.9 8h1.6M3.4 3.4l1.1 1.1M11.5 11.5l1.1 1.1M3.4 12.6l1.1-1.1M11.5 4.5l1.1-1.1" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" fill="none"/></svg></button><button type="button" role="radio" data-theme-set="dark" aria-checked="false" aria-label="Dark theme" title="Dark"><svg viewBox="0 0 16 16" width="16" height="16" aria-hidden="true"><path d="M13.2 9.6A5.6 5.6 0 0 1 6.4 2.8a5.6 5.6 0 1 0 6.8 6.8z" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linejoin="round"/></svg></button></div>
   </div>
   <div class="row2" id="row2" hidden>
     <nav class="tabs" id="tabs" role="tablist" aria-label="Sections"></nav>
@@ -1773,7 +1785,7 @@ function buildVer(){
    '<pre style="margin-top:12px">Version        2.5.0\nDate           15 Oct 2026\nStatus         Prototype | Pilot | Released\nSummary        One sentence on what this version is for.\nAdded          New features, in plain words.\nChanged        Things that work differently now.\nRemoved        Things that no longer exist.\nFixed          Problems that were corrected.\nKnown limits   What this version does not do yet.\nNext           Ideas queued for the following version.</pre></div>'+
   '<div class="sec"><h2>Version history</h2>'+
    entry({v:'2.5.0',date:'15 Oct 2026',status:'Prototype',cur:true,sum:'A visual refresh in the style of a macOS app. Every feature works as before.',
-    added:['<b>Dark theme</b> that follows the system setting, built from the same colors as the light theme.','Motion that answers a press: buttons, cards and tabs scale down slightly while held, the ticket drawer slides in, and board cards rise in once when the board opens.','Toasts fade out instead of disappearing.'],
+    added:['<b>Dark theme</b> and a <b>theme switch</b> in the header: System, Light or Dark. System, the default, follows the device setting, and the choice is remembered in this browser.','Motion that answers a press: buttons, cards and tabs scale down slightly while held, the ticket drawer slides in, and board cards rise in once when the board opens.','Toasts fade out instead of disappearing.'],
     changed:['New look: neutral surfaces, one blue accent, a frosted toolbar, segmented tabs, grouped board columns, and a floating ticket drawer.','The system font replaces the downloaded fonts, so the page loads with no external files.','With Reduce motion turned on, movement is replaced by a short fade.','On phones the header scrolls away and only the tab strip stays pinned, so more of the screen is left for the board.','On narrow screens the Workflow diagram says it scrolls sideways.'],
     fixed:['Text in the Workflow diagram no longer runs past the edge of its boxes. The Evaluate step now reads "Three ratings".'],
     limits:['The animations and dark theme have not yet been checked on a phone or at every screen width.']}),
@@ -1946,6 +1958,13 @@ document.addEventListener('pointermove',function(e){var el=e.target.closest&&e.t
 document.addEventListener('focusin',function(e){var el=e.target.closest&&e.target.closest('[data-tip]');if(!el)return;tipFill(el);var b=el.getBoundingClientRect();tipPos(b.left+b.width/2,b.top)});
 document.addEventListener('focusout',tipHide);window.addEventListener('blur',tipHide);window.addEventListener('scroll',tipHide,true);
 function tabFade(){var t=$('#tabs');if(t)t.classList.toggle('more',t.scrollWidth-t.clientWidth-t.scrollLeft>4)}
+(function(){var KEY='ccs-theme',root=document.documentElement,box=$('#theme');if(!box)return;
+  function mode(){try{var m=localStorage.getItem(KEY);return m==='light'||m==='dark'?m:'system'}catch(e){return 'system'}}
+  function apply(m){if(m==='light'||m==='dark')root.setAttribute('data-theme',m);else root.removeAttribute('data-theme');
+    $$('button',box).forEach(function(b){b.setAttribute('aria-checked',String(b.dataset.themeSet===m))})}
+  apply(mode());
+  box.addEventListener('click',function(e){var b=e.target.closest('button[data-theme-set]');if(!b)return;var m=b.dataset.themeSet;
+    try{if(m==='system')localStorage.removeItem(KEY);else localStorage.setItem(KEY,m)}catch(err){}apply(m)})})();
 (function(){var t=$('#tabs');if(t)t.addEventListener('scroll',tabFade,{passive:true});window.addEventListener('resize',tabFade)})();
 var rz=null;window.addEventListener('resize',function(){clearTimeout(rz);rz=setTimeout(function(){if(S.user&&(S.tab==='rep'||S.tab==='score'))render(true)},150)});
 init();buildHeader();buildLogin();buildBoard();buildHist();buildRep();buildForm();buildFlow();buildPlan();buildVer();
