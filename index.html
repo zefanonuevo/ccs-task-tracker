@@ -1333,11 +1333,11 @@ function preview(n){var out='';
 
 /* ---------- workflow diagram ---------- */
 function buildFlow(){
-  var L=['Requester','Coordinator','Assistant','System'],lh=104,lw=104,cw=152,nw=134,nh=66,top=6,cols=7,W=lw+cols*cw+12,Hh=top+L.length*lh+6;
+  var L=['Requester','Coordinator','Assistant','System'],lh=104,lw=104,cw=160,nw=142,nh=66,top=6,cols=7,W=lw+cols*cw+12,Hh=top+L.length*lh+6;
   var N={a:{l:0,c:0,t:'Sign in and submit',s:'Pick a catalog item',n:'ack by email'},b:{l:3,c:1,t:'Create ticket',s:'Time tracker starts',n:'notify requester'},
    c:{l:1,c:2,t:'Assign',s:'Availability, function',n:'notify assistant'},d:{l:2,c:3,t:'Start work',s:'Status: in progress',n:'notify requester'},
    h:{l:0,c:3,t:'Reply with details',s:'On hold, tracker paused',n:'notify assistant'},e:{l:2,c:4,t:'Update or complete',s:'Remarks to the timeline',n:'notify requester'},
-   f:{l:0,c:5,t:'Evaluate',s:'Quality, punctuality, expertise',n:'notify assistant'},g:{l:3,c:6,t:'Update scores',s:'Monitoring and rules',n:'notify coordinator'}};
+   f:{l:0,c:5,t:'Evaluate',s:'Three ratings',n:'notify assistant'},g:{l:3,c:6,t:'Update scores',s:'Monitoring and rules',n:'notify coordinator'}};
   var X=function(k){return lw+N[k].c*cw+(cw-nw)/2},Y=function(k){return top+N[k].l*lh+(lh-nh)/2};
   var s='<svg viewBox="0 0 '+W+' '+Hh+'" role="img" aria-label="Swimlane diagram of the request workflow from sign-in to evaluation"><defs><marker id="ah" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path class="ah" d="M0 0L10 5L0 10z"/></marker></defs>';
   L.forEach(function(n,i){s+='<rect class="'+(i%2?'lane-b':'lane-a')+'" x="0" y="'+(top+i*lh)+'" width="'+W+'" height="'+lh+'"/><line class="lane-line" x1="0" x2="'+W+'" y1="'+(top+i*lh)+'" y2="'+(top+i*lh)+'"/><text class="lane-t" x="12" y="'+(top+i*lh+lh/2+4)+'">'+n+'</text>'});
@@ -1765,6 +1765,7 @@ function buildVer(){
    entry({v:'2.5.0',date:'15 Oct 2026',status:'Prototype',cur:true,sum:'A visual refresh in the style of a macOS app. Every feature works as before.',
     added:['<b>Dark theme</b> that follows the system setting, built from the same colors as the light theme.','Motion that answers a press: buttons, cards and tabs scale down slightly while held, the ticket drawer slides in, and board cards rise in once when the board opens.','Toasts fade out instead of disappearing.'],
     changed:['New look: neutral surfaces, one blue accent, a frosted toolbar, segmented tabs, grouped board columns, and a floating ticket drawer.','The system font replaces the downloaded fonts, so the page loads with no external files.','With Reduce motion turned on, movement is replaced by a short fade.'],
+    fixed:['Text in the Workflow diagram no longer runs past the edge of its boxes. The Evaluate step now reads "Three ratings".'],
     limits:['The animations and dark theme have not yet been checked on a phone or at every screen width.']}),
    entry({v:'2.4.0',date:'13 Oct 2026',status:'Prototype',sum:'A Dean and unit head account sees the whole office without changing any task.',
     added:['<b>Dean and unit head</b> sample account (Dr. Elena Navarro). Tabs: Overview (the board, read only), All requests, Monitoring (Tasks and Staff performance), Reports with downloads, New request, Notifications, Workflow.','The unit head receives the missed-task messages, and any rule where the coordinator ticks Unit head, in Notifications and as an in-app message.','The unit head can send a request and evaluate it like any requester, and the simulation now includes requests from the dean\'s office.','The Who can do what table in Blueprint now shows the unit head as oversight, not as an editor.'],
