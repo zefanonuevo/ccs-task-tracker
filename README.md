@@ -8,6 +8,10 @@ Single-page prototype of an office request desk for the college (v2.5).
 - Service catalog with working-hours SLA tracking, ticket board, time tracker, evaluations
 - All data is simulated in the browser; nothing is stored or sent anywhere
 
+## Version history
+
+Every version since the start is in [CHANGELOG.md](CHANGELOG.md) and in the app on the **Versions** tab. It also opens from the sign-in screen.
+
 ## Design system
 
 macOS-style design: neutral surfaces, one blue accent, system font stack, frosted toolbar, segmented tabs, and a System, Light or Dark theme switch.
