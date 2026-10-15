@@ -1,20 +1,20 @@
 <!doctype html><html><head><meta charset=utf8><meta name=viewport content="width=device-width,initial-scale=1,viewport-fit=cover"><style>:root{color-scheme:light;box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}html{scroll-padding-top:env(safe-area-inset-top,0px)}body{margin:0;padding:0;font:14px -apple-system,BlinkMacSystemFont,sans-serif;background:#fff;color:#000}img{max-width:100%}[hidden]:not([hidden=until-found i]){display:none!important}</style></head><body>
 <title>CCS Task Tracker</title>
 <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' rx='7' fill='%230071e3'/%3E%3Cpath d='M8 11h16M8 16h11M8 21h7' stroke='white' stroke-width='2.6' stroke-linecap='round' fill='none'/%3E%3C/svg%3E">
-<link rel="stylesheet" href="https://zefanonuevo.github.io/ccs-design/ccs-tokens.css?v=1">
+<link rel="stylesheet" href="https://zefanonuevo.github.io/ccs-design/ccs-tokens.css?v=2">
 <style>
 /* Layout concept: a macOS-style window. Frosted sticky toolbar, segmented tabs, grouped surfaces, a floating inspector for the ticket drawer.
    Shared tokens (color, shadow, easing, type, theme switch) load from ccs-design. Tokens below are specific to this app. */
 :root{
-  --st-new:#8e8e93; --st-assigned:#5e5ce6; --st-progress:#0071e3; --st-hold:#ff9f0a; --st-done:#30a14e;
-  --s1:#2a78d6; --s2:#eb6834; --s3:#1baf7a; --hm1:#cde2fb; --hm2:#9ec5f4; --hm3:#6da7ec; --hm4:#3987e5; --hm5:#1c5cab;
+  --st-new:#8e8e93; --st-assigned:#3d5a4c; --st-progress:#0b5d45; --st-hold:#ff9f0a; --st-done:#30a14e;
+  --s1:#0b5d45; --s2:#111a15; --s3:#7fc4a5; --hm1:#dcebe2; --hm2:#b3d6c4; --hm3:#7fb89d; --hm4:#3f8f6f; --hm5:#0b5d45;
 }
 @media (prefers-color-scheme:dark){:root:not([data-theme="light"]){
-  --st-new:#98989d; --st-assigned:#7d7aff; --st-progress:#4aa3ff; --st-hold:#ff9f0a; --st-done:#30d158;
-  --s1:#3987e5; --s2:#d95926; --s3:#199e70; --hm1:#1c5cab; --hm2:#256abf; --hm3:#3987e5; --hm4:#6da7ec; --hm5:#9ec5f4}}
+  --st-new:#98989d; --st-assigned:#9cc5b2; --st-progress:#5fcfa5; --st-hold:#ff9f0a; --st-done:#30d158;
+  --s1:#5fcfa5; --s2:#e6eee9; --s3:#2f8f6c; --hm1:#0f3a2c; --hm2:#17543f; --hm3:#1f7a5a; --hm4:#3fb085; --hm5:#8fe0bf}}
 :root[data-theme="dark"]{
-  --st-new:#98989d; --st-assigned:#7d7aff; --st-progress:#4aa3ff; --st-hold:#ff9f0a; --st-done:#30d158;
-  --s1:#3987e5; --s2:#d95926; --s3:#199e70; --hm1:#1c5cab; --hm2:#256abf; --hm3:#3987e5; --hm4:#6da7ec; --hm5:#9ec5f4}
+  --st-new:#98989d; --st-assigned:#9cc5b2; --st-progress:#5fcfa5; --st-hold:#ff9f0a; --st-done:#30d158;
+  --s1:#5fcfa5; --s2:#e6eee9; --s3:#2f8f6c; --hm1:#0f3a2c; --hm2:#17543f; --hm3:#1f7a5a; --hm4:#3fb085; --hm5:#8fe0bf}
 
 *{box-sizing:border-box}
 [hidden]{display:none!important}

@@ -14,7 +14,7 @@ Every version since the start is in [CHANGELOG.md](CHANGELOG.md) and in the app 
 
 ## Design system
 
-macOS-style design: neutral surfaces, one blue accent, system font stack, frosted toolbar, segmented tabs, and a System, Light or Dark theme switch.
+macOS-style design: neutral surfaces, one green accent, system font stack, frosted toolbar, segmented tabs, and a System, Light or Dark theme switch.
 
 Colors, shadows, easing, type and the theme switch styles load from the shared stylesheet in [ccs-design](https://github.com/zefanonuevo/ccs-design), which [ccs-scgss](https://github.com/zefanonuevo/ccs-scgss) also uses, so the two can later be merged into one site. Only the chart and status colors are defined in this file.
 
