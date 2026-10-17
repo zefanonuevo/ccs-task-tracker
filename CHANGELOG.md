@@ -13,10 +13,28 @@ Numbering: **Major** (3.0) means how people work changes; **Minor** (2.1) means 
 | Design proposal | 14 Oct 2026 | The claude.ai artifact Task Tracker Preview: a specimen sheet for the macOS look, with the motion values and colors that 2.5.0 adopted. |
 | 2.5.0 | 15 Oct 2026 | GitHub. Ten commits, listed below. |
 | 2.6.0 | 15 Oct 2026 | GitHub. This version history change. |
+| 2.7.0 | 18 Oct 2026 | GitHub. CCS Portal colors. |
 
 # Versions
 
-## 2.6.0 (15 Oct 2026, Prototype, current)
+## 2.7.0 (18 Oct 2026, Prototype, current)
+
+The colors now match the CCS Portal website. Every feature works as before.
+
+### Changed
+
+- Light and dark colors follow the portal palette: Ink, Forest, Mint, Paper and Amber. Text, lines and surfaces are slightly different shades; the green accent is unchanged.
+- The header version tag now reads v2.7.
+
+### Fixed
+
+- The favicon was still blue and is now the portal green.
+
+### Known limits
+
+- The status and heatmap colors in the charts are kept as they were.
+
+## 2.6.0 (15 Oct 2026, Prototype)
 
 The full version history can be read before signing in, and every change since the first sketch is recorded in one place.
 

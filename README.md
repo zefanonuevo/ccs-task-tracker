@@ -1,6 +1,6 @@
 # CCS Task Tracker
 
-Single-page prototype of an office request desk for the college (v2.5).
+Single-page prototype of an office request desk for the college (v2.7).
 
 **Live:** https://zefanonuevo.github.io/ccs-task-tracker/ (or open `index.html` in a browser while online)
 
